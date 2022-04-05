@@ -14,19 +14,13 @@ function App() {
       setTurn(turn === 0 ? 1 : 0)
     }
   }
- 
-  const box = () => {
-    const arr = [1,2,3,4,5,6,7,8,9]
-    return arr.map((val) => {
-      return <div className="grid-cell"
-      onClick={(e) => draw(e, val)}></div>
-    });
-  };
+
 
   return (
     <div className="top-level-container">
       <div className="grid-container">
-        {box()}        
+        {new Array(9).fill('').map((_, index) => <div className="grid-cell"
+          onClick={(e) => draw(e, index + 1)}></div>)}
       </div>
     </div>
   );
