@@ -14,30 +14,23 @@ function App() {
       setTurn(turn === 0 ? 1 : 0)
     }
   }
+ 
+  const box = () => {
+    const arr = [1,2,3,4,5,6,7,8,9]
+    return arr.map((val) => {
+      return <div className="grid-cell"
+      onClick={(e) => draw(e, val)}></div>
+    });
+  };
+
   return (
     <div className="top-level-container">
       <div className="grid-container">
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 1)}></div>
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 2)}></div>
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 3)}></div>
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 4)}></div>
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 5)}></div>
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 6)}></div>
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 7)}></div>
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 8)}></div>
-        <div className="grid-cell"
-          onClick={(e) => draw(e, 9)}></div>
+        {box()}        
       </div>
     </div>
   );
 }
+
 
 export default App;
