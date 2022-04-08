@@ -1,28 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 div.top-level-container {
     width: 100vw;
     height: 100vh;
     display: grid;
     align-content: center;
     justify-content: center;
-    background-color: lightblue;
+    background-color: orange;
 }
 
 div.top-level-container > div.grid-container {
+    
+    
     width: 500px;
     height: 500px;
     display: flex;
     flex-wrap: wrap;
-    background-color: lightblue;
+    background-color: orange;
 }
 
 div.top-level-container > div.grid-container > div.grid-cell {
-  text-align: center;
+  font-family: 'Fredoka One', cursive;
   font-size: 100px;
-	border: 6px solid darkblue;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, #555, #333);
+  color: aqua;
 	border-radius: 10px;
 	width: 150px;
 	height: 150px;
 	margin: 0 auto;
-  font-weight: 800;
 	cursor: pointer;
+}
+
+div.top-level-container > div.grid-winner {
+  animation: wiggle 2s linear infinite;
+}
+
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
+div.top-level-container > div.grid-winner {
+  height: 4em;
+  width: 7em;
+  text-align: center;
+  font-size: 100px;
+  background: #444;
+  background: linear-gradient(to top, #555, #333);
+  border: none;
+  border-top: 5px solid aqua;
+  border-radius: 0 0 0.2em 0.2em;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 50% 5em;
 }
