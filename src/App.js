@@ -1,27 +1,83 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
+const possibilities = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
 function App() {
-  const [data, setData] = useState(['', '', '', '', '',
-    '', '', '', ''])
-  const [turn, setTurn] = useState(0);
-  const draw = (event, index) => {
-    if (data[index - 1] === '') {
-      const current = turn === 0 ? "X" : "O"
-      data[index - 1] = current;
-      event.target.innerText = current;
-      setData[index - 1] = current
-      setTurn(turn === 0 ? 1 : 0)
+  const [data, setData] = useState(Array(9).fill(''));
+  const [turn, setTurn] = useState("X");
+  const [winner, setWinner] = useState('');
+  const handleOnClick = (_, index) => {
+    if (data[index] === '') {
+      const updatedData = [...data];
+      updatedData[index] = "X";
+      setData(updatedData);
+      setTurn("O");
     }
   }
+  useEffect(() => {
+    for (let i in possibilities) {
+      if ((possibilities[i].filter((value) => data[value] === "X").length) === 2 && (possibilities[i].filter((value) => data[value] === "").length) === 1 && turn === "O" || ((possibilities[i].filter((value) => data[value] === "O").length) === 2 && (possibilities[i].filter((value) => data[value] === "").length) === 1 && turn === "O")) {
+        for (let j in possibilities[i]) {
+          if (data[possibilities[i][j]] === '') {
+            const updatedData = [...data];
+            updatedData[possibilities[i][j]] = "O";
+            setData(updatedData);
+            setTurn("X");
+            return
+          }
+        }
+        return
+      }
+    }
+    if ((data.filter((value) => value === "").length) === 0 && turn === "O") {
+      setWinner("Game is TIE");
+    }
+    else if (turn === "O") {
+      const updatedData = [...data];
+      if (data[4] === '') {
+        updatedData[4] = "O";
+        setData(updatedData);
+        setTurn("X");
+      }
+      else {
+        for (let i in data) {
 
+          if (data[i] === '') {
+            updatedData[i] = "O";
+            setData(updatedData);
+            setTurn("X");
+            return
+          }
+        }
+      }
+    }
+    // ********************Winnig Check***********************
+    for (let i = 0; i < possibilities.length; i++) {
+      let [a, b, c] = possibilities[i];
+      if (data[a] && data[a] === data[b] && data[a] === data[c]) {
+        console.log("WINNER:", data[a]);
+        setWinner(`Winner: ${data[a]}`);
+        return
+      }
+    }
+  }, [data])
 
   return (
     <div className="top-level-container">
-      <div className="grid-container">
-        {new Array(9).fill('').map((_, index) => <div className="grid-cell"
-          onClick={(e) => draw(e, index + 1)}></div>)}
-      </div>
+      {winner === '' ? <div className="grid-container">
+        {new Array(9).fill('').map((_, index) => <div key={`cell-${index}`} className="grid-cell"
+          onClick={(e) => handleOnClick(e, index)}>{data[index]}</div>)}
+      </div> : <div className="grid-winner">{winner}</div>}
     </div>
   );
 }
