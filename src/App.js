@@ -16,23 +16,25 @@ function App() {
   const [data, setData] = useState(Array(9).fill(''));
   const [turn, setTurn] = useState("X");
   const [winner, setWinner] = useState('');
+
+  const updatedData = [...data];
+  function SettingData(Index, DataValue = "O") {
+    updatedData[Index] = DataValue;
+    setData(updatedData);
+    setTurn(DataValue === "X" ? "O" : "X");
+  }
+
   const handleOnClick = (_, index) => {
     if (data[index] === '') {
-      const updatedData = [...data];
-      updatedData[index] = "X";
-      setData(updatedData);
-      setTurn("O");
+      SettingData(index, "X");
     }
   }
   useEffect(() => {
     for (let i in possibilities) {
-      if ((possibilities[i].filter((value) => data[value] === "X").length) === 2 && (possibilities[i].filter((value) => data[value] === "").length) === 1 && turn === "O" || ((possibilities[i].filter((value) => data[value] === "O").length) === 2 && (possibilities[i].filter((value) => data[value] === "").length) === 1 && turn === "O")) {
+      if ((((possibilities[i].filter((value) => data[value] === "X").length) === 2) && ((possibilities[i].filter((value) => data[value] === "").length) === 1) && (turn === "O")) || ((possibilities[i].filter((value) => data[value] === "O").length) === 2 && (possibilities[i].filter((value) => data[value] === "").length) === 1 && turn === "O")) {
         for (let j in possibilities[i]) {
           if (data[possibilities[i][j]] === '') {
-            const updatedData = [...data];
-            updatedData[possibilities[i][j]] = "O";
-            setData(updatedData);
-            setTurn("X");
+            SettingData(possibilities[i][j]);            
             return
           }
         }
@@ -42,20 +44,14 @@ function App() {
     if ((data.filter((value) => value === "").length) === 0 && turn === "O") {
       setWinner("Game is TIE");
     }
-    else if (turn === "O") {
-      const updatedData = [...data];
+    else if (turn === "O") {      
       if (data[4] === '') {
-        updatedData[4] = "O";
-        setData(updatedData);
-        setTurn("X");
+        SettingData(4);
       }
       else {
         for (let i in data) {
-
           if (data[i] === '') {
-            updatedData[i] = "O";
-            setData(updatedData);
-            setTurn("X");
+            SettingData(i);
             return
           }
         }
@@ -81,6 +77,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
