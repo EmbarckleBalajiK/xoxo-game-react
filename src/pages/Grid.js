@@ -3,11 +3,7 @@ import { useData } from "../utils/DataProvider";
 
 export function Grid(props) {
   const {
-    playingAs,
-    room: { data, turn, winner, player1, player2 },
-    setGameData,
-    setTurn,
-    setWinner,
+    room: { player1, player2 },
   } = useData();
   return (
     <>
