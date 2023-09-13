@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/xoxo-game-react/static/css/main.95a6d20d.css",
+    "main.js": "/xoxo-game-react/static/js/main.ac3bd138.js",
+    "static/js/787.6a541d2d.chunk.js": "/xoxo-game-react/static/js/787.6a541d2d.chunk.js",
+    "index.html": "/xoxo-game-react/index.html",
+    "main.95a6d20d.css.map": "/xoxo-game-react/static/css/main.95a6d20d.css.map",
+    "main.ac3bd138.js.map": "/xoxo-game-react/static/js/main.ac3bd138.js.map",
+    "787.6a541d2d.chunk.js.map": "/xoxo-game-react/static/js/787.6a541d2d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.95a6d20d.css",
+    "static/js/main.ac3bd138.js"
+  ]
+}
