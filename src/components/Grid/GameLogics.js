@@ -16,18 +16,22 @@ const possibilities = [
 
 export function GameLogics() {
   const {
+    playingMode,
     playingAs,
     room: { data, turn, winner },
     setGameData,
     setTurn,
     setWinner,
   } = useData();
+
   console.log({ playingAs });
-  function SettingData(Index, DataValue = "O") {
+  async function SettingData(Index, DataValue = "O") {
     const updatedData = [...data];
     updatedData[Index] = DataValue;
-    setGameData(updatedData);
-    setTurn(DataValue === "X" ? "O" : "X");
+    await setTimeout(
+      () => setGameData(updatedData),
+      playingMode === "singlePlayer" && turn === "O" ? 400 : 0
+    ).then(setTurn(DataValue === "X" ? "O" : "X"));
   }
 
   const handleOnClick = (_, index) => {
@@ -38,36 +42,45 @@ export function GameLogics() {
   };
 
   useEffect(() => {
-    // for (let i in possibilities) {
-    //     if ((((possibilities[i].filter((value) => data[value] === "X").length) === 2)
-    //         && ((possibilities[i].filter((value) => data[value] === "").length) === 1)
-    //         && (turn === "O")) || ((possibilities[i].filter((value) => data[value] === "O").length) === 2
-    //             && (possibilities[i].filter((value) => data[value] === "").length) === 1 && turn === "O")) {
-    //         for (let j in possibilities[i]) {
-    //             if (data[possibilities[i][j]] === '') {
-    //                 SettingData(possibilities[i][j]);
-    //                 return
-    //             }
-    //         }
-    //         return
-    //     }
-    // }
+    if (playingMode === "singlePlayer") {
+      for (let i in possibilities) {
+        if (
+          (possibilities[i].filter((value) => data[value] === "X").length ===
+            2 &&
+            possibilities[i].filter((value) => data[value] === "").length ===
+              1 &&
+            turn === "O") ||
+          (possibilities[i].filter((value) => data[value] === "O").length ===
+            2 &&
+            possibilities[i].filter((value) => data[value] === "").length ===
+              1 &&
+            turn === "O")
+        ) {
+          for (let j in possibilities[i]) {
+            if (data[possibilities[i][j]] === "") {
+              SettingData(possibilities[i][j]);
+              return;
+            }
+          }
+          return;
+        }
+      }
+    }
+
     if (data.filter((value) => value === "").length === 0 && turn === "O") {
       setWinner("Game is TIE");
+    } else if (turn === "O" && playingMode === "singlePlayer") {
+      if (data[4] === "") {
+        SettingData(4);
+      } else {
+        for (let i in data) {
+          if (data[i] === "") {
+            SettingData(i);
+            return;
+          }
+        }
+      }
     }
-    // else if (turn === "O") {
-    //     if (data[4] === '') {
-    //         SettingData(4);
-    //     }
-    //     else {
-    //         for (let i in data) {
-    //             if (data[i] === '') {
-    //                 SettingData(i);
-    //                 return
-    //             }
-    //         }
-    //     }
-    // }
     // ********************Winnig Check***********************
     for (let i = 0; i < possibilities.length; i++) {
       let [a, b, c] = possibilities[i];

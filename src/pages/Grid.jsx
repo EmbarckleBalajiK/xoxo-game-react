@@ -3,15 +3,20 @@ import { useData } from "../utils/DataProvider";
 
 export function Grid(props) {
   const {
-    room: { player1, player2 },
+    room: { player1, player2, turn },
   } = useData();
+  console.log({ turn });
   return (
     <>
       {!props.containerStyle && (
-        <>
-          <div className="show-player-x">{player1}</div>
-          <div className="show-player-o">{player2}</div>
-        </>
+        <div className="top-bar">
+          <div className={`show-player-x ${turn === "X" && "active-player"}`}>
+            {player1}
+          </div>
+          <div className={`show-player-o ${turn === "O" && "active-player"}`}>
+            {player2}
+          </div>
+        </div>
       )}
       {props.winner === "" || props.containerStyle ? (
         <div className="grid-container" style={props.containerStyle}>
